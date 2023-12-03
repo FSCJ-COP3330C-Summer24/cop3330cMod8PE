@@ -14,18 +14,18 @@ import java.util.stream.Stream;
 
 // main application class
 public class HappyBirthdayApp implements BirthdayCardSender {
-    //private User user;
+
+    //singleton
+    private static HappyBirthdayApp happyBirthdayApp = new HappyBirthdayApp();
+
     private ArrayList<User> birthdays = new ArrayList<>();
     // Use a Queue<LinkedList> to act as message queue for the dispatcher
     private Queue<BirthdayCard> queue = new LinkedList<BirthdayCard>();
     private Stream<BirthdayCard> stream = queue.stream();
 
-    // singleton for app
-    private static HappyBirthdayApp happyBirthdayApp = new HappyBirthdayApp();
-
     private HappyBirthdayApp() { }
 
-    public static HappyBirthdayApp gethappyBirthdayApp() {
+    public static HappyBirthdayApp getHappyBirthdayApp() {
         return happyBirthdayApp;
     }
 
@@ -60,7 +60,7 @@ public class HappyBirthdayApp implements BirthdayCardSender {
 
     public void processCards() {
         // show the birthdays
-        HappyBirthdayApp hba = HappyBirthdayApp.gethappyBirthdayApp();
+        HappyBirthdayApp hba = HappyBirthdayApp.getHappyBirthdayApp();
         if (!hba.birthdays.isEmpty()) {
             for (User u : hba.birthdays) {
                 // see if today is their birthday
@@ -80,8 +80,9 @@ public class HappyBirthdayApp implements BirthdayCardSender {
 
     // main program
     public static void main(String[] args) {
-    
-        HappyBirthdayApp hba = HappyBirthdayApp.gethappyBirthdayApp();
+
+        // get singleton
+        HappyBirthdayApp hba = HappyBirthdayApp.getHappyBirthdayApp();
 
         // use current date for testing, adjust where necessary
         ZonedDateTime currentDate = ZonedDateTime.now();
